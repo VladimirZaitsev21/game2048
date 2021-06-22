@@ -8,7 +8,7 @@ public abstract class Board {
 
     private final int weight;
     private final int height;
-    private final Map<Key, Integer> board = new HashMap<>();
+    protected final Map<Key, Integer> board = new HashMap<>();
 
     public Board(int weight, int height) {
         this.weight = weight;

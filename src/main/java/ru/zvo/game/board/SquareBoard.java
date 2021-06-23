@@ -2,7 +2,7 @@ package ru.zvo.game.board;
 
 import java.util.*;
 
-public class SquareBoard  extends Board {
+public class SquareBoard<V>  extends Board<Key, V> {
 
     private final int size;
 
@@ -12,7 +12,7 @@ public class SquareBoard  extends Board {
     }
 
     @Override
-    public void fillBoard(List<Integer> list) {
+    public void fillBoard(List<V> list) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 board.put(new Key(i, j), list.get(i * size + j));
@@ -23,7 +23,7 @@ public class SquareBoard  extends Board {
     @Override
     public List<Key> availableSpace() {
         List<Key> keys = new ArrayList<>();
-        for (Map.Entry<Key, Integer> entry: board.entrySet()) {
+        for (Map.Entry<Key, V> entry: board.entrySet()) {
             if(entry.getValue() == null) {
                 keys.add(entry.getKey());
             }
@@ -32,8 +32,8 @@ public class SquareBoard  extends Board {
     }
 
     @Override
-    public void addItem(Key key, Integer value) {
-        board.putIfAbsent(key, value);
+    public void addItem(Key key, V value) {
+        board.put(key, value);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SquareBoard  extends Board {
     }
 
     @Override
-    public Integer getValue(Key key) {
+    public V getValue(Key key) {
         return board.get(key);
     }
 
@@ -76,14 +76,21 @@ public class SquareBoard  extends Board {
     }
 
     @Override
-    public boolean hasValue(Integer value) {
+    public boolean hasValue(V value) {
         return board.containsValue(value);
     }
 
     @Override
-    public List<Integer> getValues(List<Key> keys) {
-        List<Integer> values = new ArrayList<>();
+    public List<V> getValues(List<Key> keys) {
+        List<V> values = new ArrayList<>();
         keys.forEach(x -> values.add(board.get(x)));
         return values;
+    }
+
+    @Override
+    public String toString() {
+        return "SquareBoard{" +
+                "board=" + board +
+                '}';
     }
 }

@@ -65,7 +65,7 @@ public class Game2048Test {
         game.init();
         if (b.availableSpace().size() != 14) throw new RuntimeException("init must be add 2 item");
         if (!game.canMove()) throw new RuntimeException("canMove not work =(");
-        game.addItem();
+//        game.addItem();
         if (b.availableSpace().size() != 13) throw new RuntimeException("addItem must be add 1 item");
     }
 

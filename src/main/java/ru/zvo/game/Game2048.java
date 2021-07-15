@@ -1,5 +1,6 @@
 package ru.zvo.game;
 
+import ru.zvo.exception.NotEnoughSpaceException;
 import ru.zvo.game.board.Board;
 import ru.zvo.game.board.Direction;
 import ru.zvo.game.board.Key;
@@ -22,8 +23,12 @@ public class Game2048 implements Game {
             list.add(null);
         }
         board.fillBoard(list);
-        addItem();
-        addItem();
+        try {
+            addItem();
+            addItem();
+        } catch (NotEnoughSpaceException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -48,18 +53,24 @@ public class Game2048 implements Game {
             return !lines.equals(linesAfterMerging);
         }
     }
+
     @Override
     public boolean move(Direction direction) {
+        if (!canMove()) {
+            return false;
+        }
         List<List<Key>> keys = new ArrayList<>();
         List<List<Integer>> lines = new ArrayList<>();
         List<List<Integer>> linesAfterMerging = determineBoardValuesAfterMove(direction, keys, lines);
         if (!lines.equals(linesAfterMerging)) {
             putItemsToBoard(keys, linesAfterMerging);
-            addItem();
-            return true;
-        } else {
-            return false;
         }
+        try {
+            addItem();
+        } catch (NotEnoughSpaceException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     private List<List<Integer>> determineBoardValuesAfterMove(Direction direction, List<List<Key>> keys, List<List<Integer>> lines) {
@@ -132,17 +143,24 @@ public class Game2048 implements Game {
     }
 
     @Override
-    public void addItem() {
+    public void addItem() throws NotEnoughSpaceException {
         double randomValue = random.nextDouble();
         int cellValue = 4;
         if (randomValue > 0.1) {
             cellValue = 2;
         }
-        Key key = getRandomCoordinates(board.availableSpace());
-        board.addItem(key, cellValue);
+        try {
+            Key key = getRandomCoordinates(board.availableSpace());
+            board.addItem(key, cellValue);
+        } catch (NotEnoughSpaceException e) {
+            throw new NotEnoughSpaceException("There is not any free cell on board");
+        }
     }
 
-    private Key getRandomCoordinates(List<Key> availableSpace) {
+    private Key getRandomCoordinates(List<Key> availableSpace) throws NotEnoughSpaceException {
+        if (availableSpace.size() == 0) {
+            throw new NotEnoughSpaceException("There is not any free cell on board");
+        }
         int keyNumber = random.nextInt(availableSpace.size());
         return availableSpace.get(keyNumber);
     }

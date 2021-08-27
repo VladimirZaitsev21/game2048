@@ -1,5 +1,5 @@
 package ru.zvo.view;
-
+import org.springframework.stereotype.Component;
 import ru.zvo.game.Game;
 import ru.zvo.game.Game2048;
 import ru.zvo.game.board.Board;
@@ -11,13 +11,14 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+@Component
 public class Game2048Panel extends JPanel {
     private static final Color BG_COLOR = new Color(0xbbada0);
     private static final String FONT_NAME = "Arial";
     private static final int TILE_SIZE = 64;
     private static final int TILES_MARGIN = 16;
 
-    private final Game game = new Game2048();
+    private Game game;
     private boolean myWin;
     private boolean myLose;
 
@@ -25,7 +26,8 @@ public class Game2048Panel extends JPanel {
      * Creates a new <code>JPanel</code> with a double buffer
      * and a flow layout.
      */
-    public Game2048Panel() {
+    public Game2048Panel(Game game) {
+        this.game = game;
         setPreferredSize(new Dimension(340, 400));
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
@@ -69,6 +71,11 @@ public class Game2048Panel extends JPanel {
         });
         game.init();
     }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
 
     @Override
     public void paint(Graphics g) {

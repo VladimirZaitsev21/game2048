@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public abstract class Board<K, V> {
 
     private final int weight;
     private final int height;
-//    protected final Map<Key, Integer> board = new HashMap<>();
     protected final Map<K, V> board = new HashMap<>();
 
     public Board(int weight, int height) {

@@ -1,3 +1,12 @@
 /oop-task.iml
 /.idea/
 /target/
+/game-logic/target/
+/game-logic/game-logic.iml
+/game-logic/site/
+/game-ui/site/
+/game-ui/target/
+/game-ui/game-ui.iml
+/game2048-with-modules.iml
+/git.properties
+/google_check.xml

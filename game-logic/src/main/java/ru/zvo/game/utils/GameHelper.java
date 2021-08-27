@@ -1,11 +1,15 @@
 package ru.zvo.game.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Component
 public class GameHelper {
 
+    //Метод сдвига элементов игрового поля и складывания одинаковых
     public List<Integer> moveAndMergeEqual(List<Integer> list) {
         if (isListEmpty(list)) {
             return list;
@@ -14,6 +18,7 @@ public class GameHelper {
         return mergeElements(newList);
     }
 
+    //метод заполнения списка пустыми значениями до нужной длины
     private void appendNulls(List<Integer> sourceList, List<Integer> newList) {
         int sizeDifference = sourceList.size() - newList.size();
         for (int i = 0; i < sizeDifference; i++) {
@@ -21,6 +26,7 @@ public class GameHelper {
         }
     }
 
+    //метод перемещения пустых значений в конец списка
     private List<Integer> transferNulls(List<Integer> list) {
         List<Integer> transferredList = new ArrayList<>();
         for (Integer element : list) {
@@ -32,10 +38,12 @@ public class GameHelper {
         return transferredList;
     }
 
+    //Метод складывания одинаковых элементов
     private List<Integer> mergeElements(List<Integer> list) {
         List<Integer> mergedList = new ArrayList<>();
         int i = 0;
         while (i < (list.size() - 1) && (list.get(i) != null)) {
+            //Если элемент равен элементу, стоящему за ним
             if (list.get(i).equals(list.get(i + 1))) {
                 mergedList.add(list.get(i) * 2);
                 i += 2;
@@ -47,6 +55,7 @@ public class GameHelper {
                 i++;
             }
         }
+        //добавляем пустые значения
         appendNulls(list, mergedList);
         return mergedList;
     }

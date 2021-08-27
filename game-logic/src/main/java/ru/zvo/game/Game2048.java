@@ -1,5 +1,6 @@
 package ru.zvo.game;
 
+import org.springframework.stereotype.Component;
 import ru.zvo.exception.NotEnoughSpaceException;
 import ru.zvo.game.board.Board;
 import ru.zvo.game.board.Direction;
@@ -7,14 +8,39 @@ import ru.zvo.game.board.Key;
 import ru.zvo.game.board.SquareBoard;
 import ru.zvo.game.utils.GameHelper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
+@Component
 public class Game2048 implements Game {
 
     public static final int GAME_SIZE = 4;
-    private final Board<Key, Integer> board = new SquareBoard<>(GAME_SIZE);
-    private final GameHelper helper = new GameHelper();
-    private final Random random = new Random();
+    private Board<Key, Integer> board;
+    private GameHelper helper;
+    private Random random;
+
+    public Game2048(Board<Key, Integer> board, GameHelper helper, Random random) {
+        System.out.println(board);
+        System.out.println(helper);
+        System.out.println(random);
+        this.board = board;
+        this.helper = helper;
+        this.random = random;
+    }
+
+    public void setBoard(Board<Key, Integer> board) {
+        this.board = board;
+    }
+
+    public void setHelper(GameHelper helper) {
+        this.helper = helper;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
 
     @Override
     public void init() {

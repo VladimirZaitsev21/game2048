@@ -1,10 +1,15 @@
 package ru.zvo.game.board;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 public class SquareBoard<V>  extends Board<Key, V> {
 
     private final int size;
+    static int pack;
 
     public SquareBoard(int size) {
         super(size, size);
@@ -13,7 +18,7 @@ public class SquareBoard<V>  extends Board<Key, V> {
 
     @Override
     public void fillBoard(List<V> list) {
-        if (list.size() > size * size) {
+        if (list.size() != size * size) {
             throw new RuntimeException("Initialization error");
         }
         for (int i = 0; i < size; i++) {
